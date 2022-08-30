@@ -1,0 +1,61 @@
+﻿@page
+@model VoteTask.Pages.MyItemsModel
+@{
+    ViewData["Title"] = "My Items";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">My Items</h2>
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+
+    <br /><br />
+
+    <table class="table-borderless table-active" style="width:90%">
+        <thead>
+            <tr style="text-align:center">
+                <th>Name</th>
+                <th>Volume</th>
+                <th>Created date</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Items)
+            {
+                <tr style="text-align:center">
+                    <td>@item.Name</td>
+                    <td>@item.Volume</td>
+                    <td>@item.Date</td>
+                    <td>@item.VoteState</td>
+                    <td>
+                        <form method="post">
+                            @if(item.Volume == 0)
+                            {
+                                @if(item.VoteState == "Approved")
+                                {
+                                    <button type="submit" asp-page-handler="reject" class="btn btn-danger" asp-route-id="@item.Id"> Reject </button>
+                                }
+                                @if(item.VoteState == "Rejected")
+                                {
+                                    <button type="submit" asp-page-handler="delete" class="btn btn-danger" asp-route-id="@item.Id"> Delete </button>
+                                    <button type="submit" asp-page-handler="approve" class="btn btn-success" asp-route-id="@item.Id"> Approve </button>
+                                }
+                                @if(item.VoteState == "New")
+                                {
+                                    <button type="submit" asp-page-handler="delete" class="btn btn-danger" asp-route-id="@item.Id"> Delete </button>
+                                    <button type="submit" asp-page-handler="approve" class="btn btn-success" asp-route-id="@item.Id"> Approve </button>
+                                }
+                            }
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+     </table>
+</div>
